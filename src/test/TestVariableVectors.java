@@ -35,6 +35,9 @@ public class TestVariableVectors {
 		
 	}
 	
+	
+	
+	
 	private static int[] constructExpectationUsingStringMethods(int desiredLength, int seed){
 		int[] result = new int[desiredLength];
 		char[] fromBinary = Integer.toBinaryString(seed).toCharArray();
