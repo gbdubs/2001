@@ -28,8 +28,14 @@ public class TestPredicateEvaluation {
 	
 	@Test
 	public void testSinglePredicateEvaluation(){
-		int[][] predicate = {{1, -1, 0}, {-1, 0, 0}, {1, 0, 1}};
-		String expected = 
+		int[][] predicate1 = {{1, -1, 0}, {-1, 0, 0}, {1, 0, 1}};
+		String expected1 = "00001000";
+		assertEquals(expected1, PredicateManipulator.evaluate(predicate1));
+		
+		int[][] predicate2 = {{0, -1, 1}, {-1, 1, 0}, {1, 0, -1}};
+		String expected2 = "10000001";
+		assertEquals(expected2, PredicateManipulator.evaluate(predicate2));
 	}
+	
 	
 }
