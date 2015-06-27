@@ -1,10 +1,10 @@
 package calc;
 
 import tools.Utilities;
+import tools.VariableVectors;
 
 public class PredicateManipulator {
 
-	
 	public static String evaluate(int[][] predicate){
 		int nSubpredicates = predicate.length;
 		if (nSubpredicates == 0){
@@ -14,7 +14,7 @@ public class PredicateManipulator {
 		char[] result = new char[Utilities.twoPow(nVariables)];
 		
 		for (int i = 0; i < result.length; i++){
-			int[] vector = constructDeterministicVector(nVariables, i);
+			int[] vector = VariableVectors.constructDeterministicVector(nVariables, i);
 			// Converts the integer result to its character equivalent.
 			result[i] = (char) (48 + evaluatePredicateWithVector(predicate, vector));
 		}
@@ -36,10 +36,5 @@ public class PredicateManipulator {
 			}
 		}
 		return 1;
-	}
-	
-	public static int[] constructDeterministicVector(int nVariables, int seed){
-		
-		return null;
 	}
 }
