@@ -12,8 +12,8 @@ public class TestVariableVectors {
 	@Test
 	public void testThreeVariableVectors(){
 		int[][] expected = {
-				{0, 0, 0}, {1, 0, 0}, {0, 1, 0}, {1, 1, 0}, 
-				{0, 0, 1}, {1, 0, 1}, {0, 1, 1}, {1, 1, 1}
+				{-1, -1, -1}, { 1, -1, -1}, {-1,  1, -1}, { 1,  1, -1}, 
+				{-1, -1,  1}, { 1, -1,  1}, {-1,  1,  1}, { 1,  1,  1}
 		};
 		for (int i = 0; i < expected.length; i++){
 			assertArrayEquals(expected[i], VariableVectors.constructDeterministicVector(3, i));
@@ -30,20 +30,23 @@ public class TestVariableVectors {
 			int[] actual = VariableVectors.constructDeterministicVector(nVariables, seed);
 			assertArrayEquals(expectation, actual);
 		}
-		
-		
-		
 	}
-	
-	
 	
 	
 	private static int[] constructExpectationUsingStringMethods(int desiredLength, int seed){
 		int[] result = new int[desiredLength];
+		for(int i = 0; i < result.length; i++){
+			result[i] = -1;
+		}
 		char[] fromBinary = Integer.toBinaryString(seed).toCharArray();
 		int index = 0;
 		for (int i = fromBinary.length - 1; i >= 0; i--){
-			result[index++] = fromBinary[i] - 48;
+			int positive = fromBinary[i] - 48;
+			if (positive == 1){
+				result[index++] = 1;
+			} else {
+				result[index++] = -1;
+			}
 		}
 		return result;
 	}

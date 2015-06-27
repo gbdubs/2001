@@ -26,9 +26,12 @@ public class VariableVectors {
 	
 	private static int[] calculateVector(int nVariables, int seed){
 		int[] result = new int[nVariables];
+		for(int i = 0; i < result.length; i++){
+			result[i] = -1;
+		}
 		int current = 0;
 		while (seed > 0){
-			result[current] = seed % 2;
+			result[current] = (seed % 2) * 2 - 1;
 			seed = seed / 2;
 			current++;
 		}
