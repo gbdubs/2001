@@ -6,44 +6,32 @@ import tools.Utilities;
 
 public class PredicateGenerator {
 
-	private static int[][] generateNSubPredicatesDeterministically(int nVariables, int nSubPredicates, int seed){
-		int nPossibleSubPredicates = 8 * nVariables * (nVariables - 1) * (nVariables - 2) / 3;
+	public static int[][] generatePredicateWithNSubPredicatesDeterministically(int nVariables, int nSubPredicates, int seed){
+		int nPossibleSubPredicates = 8 * nVariables * (nVariables - 1) * (nVariables - 2) / 6;
 		
-		int[] subPredicateSeeds = new int[nSubPredicates];
-		
-		int current = 0;
-		
-		for(int i = 0; i < subPredicateSeeds.length; i++){
-			if (seed < Utilities.combinations(nPossibleSubPredicates, nSubPredicates - i)){
-				
-			} else {
-				seed -= Utilities.combinations(nPossibleSubPredicates, nSubPredicates - i);
-			}
-			
-			
+		int[] subPredicateSeeds = generatePermutationDirections(nSubPredicates, nPossibleSubPredicates, seed);
+		int[][] result = new int[nSubPredicates][3];
+		for (int i = 0; i < nSubPredicates; i++){
+			result[i] = generateThreeSatSignedSubPredicate(nVariables, subPredicateSeeds[i]);
 		}
-		return null;
-		
+		return result;
 	}
 	
-
-	
-	public static int[] generateSubPredicateSeeds(int nSubPredicates, int nPossibleSubPredicates, int seed){
-		int[] subPredicateSeeds = new int[nSubPredicates];
+	public static int[] generatePermutationDirections(int k, int n, int seed){
+		int[] directions = new int[k];
 		
-		int current = 0;
-		
-		for(int i = 0; i < subPredicateSeeds.length; i++){
-			if (seed < Utilities.combinations(nPossibleSubPredicates, nSubPredicates - i)){
-				subPredicateSeeds[i] = current;
+		int current = 1;
+		int index = 0;
+		while (index < directions.length){
+			if (seed < Utilities.combinations(n - current, k - index - 1)){
+				directions[index++] = current - 1;
 			} else {
-				seed -= Utilities.combinations(nPossibleSubPredicates, nSubPredicates - i);
+				seed -= Utilities.combinations(n - current, k - index - 1);
 			}
 			current++;
-			
-			
 		}
-		return subPredicateSeeds;
+
+		return directions;
 	}
 	
 	public static int[] generateThreeSatSignedSubPredicate(int nVariables, int seed){
@@ -108,15 +96,5 @@ public class PredicateGenerator {
 		return result;
 		
 	}
-	public static void main(String[] args){
-		int total = Utilities.combinations(80, 4);
-		for(int i = 0; i < total; i++){
-			System.out.println(Arrays.toString(generateSubPredicateSeeds(4, 80, i)));
-			if (i == 200){
-				break;
-			}
-		}
-	}
-	
 	
 }
